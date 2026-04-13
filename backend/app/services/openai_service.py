@@ -1,7 +1,3 @@
-"""
-OpenAI service — all AI logic lives here, isolated from the API routes.
-This makes it easy to swap models or mock in tests.
-"""
 import json
 import re
 from openai import AsyncOpenAI
@@ -20,8 +16,6 @@ class OpenAIService:
     def __init__(self, settings: Settings):
         self.client = AsyncOpenAI(api_key=settings.openai_api_key)
         self.model = settings.openai_model
-
-    # ── Internal helper ───────────────────────────────────────────────────────
 
     async def _chat(self, system_prompt: str, user_prompt: str) -> str:
         """
@@ -49,7 +43,6 @@ class OpenAIService:
         cleaned = re.sub(r"\s*```$", "", cleaned)
         return json.loads(cleaned)
 
-    # ── Public methods ────────────────────────────────────────────────────────
 
     async def analyze_cv(self, cv_text: str) -> CVAnalysisResponse:
         """Extract structured profile data from a CV."""

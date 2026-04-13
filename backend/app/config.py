@@ -1,7 +1,3 @@
-"""
-Central configuration — reads from .env file automatically.
-Never hardcode secrets. Access them via get_settings().
-"""
 from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -16,7 +12,7 @@ class Settings(BaseSettings):
     app_port: int = 8000
 
     # CORS
-    allowed_origins: str = "http://localhost:3000"
+    allowed_origins: str = "https://my-job-assistant-xk24.vercel.app/"
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -32,8 +28,4 @@ class Settings(BaseSettings):
 
 @lru_cache()
 def get_settings() -> Settings:
-    """
-    Cached settings — reads .env once and reuses.
-    Use as a FastAPI dependency: settings = Depends(get_settings)
-    """
     return Settings()

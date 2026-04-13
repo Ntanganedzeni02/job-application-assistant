@@ -1,7 +1,3 @@
-"""
-/analyze router — the four core AI endpoints.
-Each endpoint is thin: validate input → call service → return response.
-"""
 from fastapi import APIRouter, Depends, HTTPException
 from openai import OpenAIError
 
@@ -24,8 +20,7 @@ def get_ai_service(settings: Settings = Depends(get_settings)) -> OpenAIService:
     return OpenAIService(settings)
 
 
-# ── Endpoint 1: Analyze CV ────────────────────────────────────────────────────
-
+#  Endpoint 1: Analyze CV
 @router.post(
     "/cv",
     response_model=CVAnalysisResponse,
@@ -44,8 +39,7 @@ async def analyze_cv(
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 
-# ── Endpoint 2: Match Job ─────────────────────────────────────────────────────
-
+#  Endpoint 2: Match Job 
 @router.post(
     "/match",
     response_model=JobMatchResponse,
@@ -64,7 +58,7 @@ async def match_job(
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 
-# ── Endpoint 3: Qualify Check (lightweight match) ────────────────────────────
+#  Endpoint 3: Qualify Check (lightweight match)
 
 @router.post(
     "/qualify",
@@ -76,10 +70,6 @@ async def qualify(
     body: MatchJobRequest,
     service: OpenAIService = Depends(get_ai_service),
 ) -> JobMatchResponse:
-    """
-    Alias for /match — both return a JobMatchResponse which
-    includes `qualifies: bool` and `match_score`.
-    """
     try:
         return await service.match_job(body.cv_text, body.job_description)
     except OpenAIError as e:
@@ -88,7 +78,7 @@ async def qualify(
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 
-# ── Endpoint 4: Improve CV + Cover Letter ─────────────────────────────────────
+#  Endpoint 4: Improve CV + Cover Letter 
 
 @router.post(
     "/improve",
