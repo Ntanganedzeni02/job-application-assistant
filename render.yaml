@@ -6,13 +6,15 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
       - key: APP_ENV
         value: production
       - key: OPENAI_MODEL
         value: gpt-4o-mini
       - key: OPENAI_API_KEY
-        sync: false   # ← You set this manually in Render dashboard (never in this file)
+        sync: false
       - key: ALLOWED_ORIGINS
-        value: https://jobassistent.vercel.app  # Update after deploying frontend
+        value: https://jobassistent.vercel.app
     healthCheckPath: /health
-    autoDeploy: true   # Deploys automatically on push to main
+    autoDeploy: true
