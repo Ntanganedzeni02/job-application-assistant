@@ -1,0 +1,22 @@
+# render.yaml — Render deployment config
+# Commit this file. Render reads it automatically.
+# Set OPENAI_API_KEY in Render Dashboard > Environment > Secret Files
+
+services:
+  - type: web
+    name: job-application-assistant-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: OPENAI_API_KEY
+        sync: false   # ← You set this manually in Render dashboard (never in this file)
+      - key: ALLOWED_ORIGINS
+        value: https://your-frontend.vercel.app  # Update after deploying frontend
+    healthCheckPath: /health
+    autoDeploy: true   # Deploys automatically on push to main

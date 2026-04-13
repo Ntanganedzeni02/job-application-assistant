@@ -1,0 +1,78 @@
+# .github/workflows/ci.yml
+# Runs on every push to main and every pull request.
+# Jobs: lint → test → deploy-check
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ── Job 1: Lint ─────────────────────────────────────────────────────────────
+  lint:
+    name: Lint (Ruff)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install linter
+        run: pip install ruff
+
+      - name: Run Ruff
+        run: ruff check .
+
+  # ── Job 2: Test ─────────────────────────────────────────────────────────────
+  test:
+    name: Test (Pytest)
+    runs-on: ubuntu-latest
+    needs: lint          # Only run tests if lint passes
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        env:
+          # Dummy key for tests — real service is mocked
+          OPENAI_API_KEY: sk-test-key-not-real
+          APP_ENV: test
+        run: pytest tests/ -v --tb=short
+
+  # ── Job 3: Deploy signal ─────────────────────────────────────────────────────
+  # Render auto-deploys from GitHub when autoDeploy: true in render.yaml.
+  # This job just confirms the pipeline is green before Render picks it up.
+  deploy-ready:
+    name: Ready to Deploy
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Signal green
+        run: |
+          echo "All checks passed on main — Render will auto-deploy."
+          echo "Monitor at: https://dashboard.render.com"
