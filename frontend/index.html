@@ -378,14 +378,6 @@
       <p class="subtitle">Analyze your CV, match jobs, and generate cover letters — instantly.</p>
     </header>
 
-    <!-- API config bar -->
-    <div class="api-config">
-      <div class="api-dot" id="apiDot"></div>
-      <span class="api-label">Backend URL</span>
-      <input type="text" class="api-url-input" id="apiUrl" value="http://localhost:8000" placeholder="http://localhost:8000" />
-      <button class="btn" style="width:auto;padding:0.4rem 1rem;font-size:0.8rem;" onclick="pingHealth()">Ping</button>
-    </div>
-
     <!-- Tabs -->
     <div class="tabs">
       <button class="tab active" onclick="switchTab('analyze')">Analyze CV</button>
@@ -469,7 +461,7 @@
   <script>
     // Helpers
 
-    const api = () => document.getElementById('apiUrl').value.replace(/\/$/, '');
+    const api = () => "https://job-application-assistant-7vnq.onrender.com";
 
     function switchTab(name) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
