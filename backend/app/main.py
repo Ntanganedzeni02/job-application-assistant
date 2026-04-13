@@ -18,9 +18,15 @@ app = FastAPI(
     redoc_url="/redoc",    
 )
 
+origins = [
+    "https://my-job-assistant-xk24.vercel.app",
+    "http://localhost:3000",
+    "http://127.0.0.1:5500"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://my-job-assistant-xk24.vercel.app/"],
+    allow_origins=origins,   # NOT "*"
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
