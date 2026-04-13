@@ -15,6 +15,6 @@ services:
       - key: OPENAI_API_KEY
         sync: false
       - key: ALLOWED_ORIGINS
-        value: https://jobassistent.vercel.app
+        value: https://my-job-assistant-xk24.vercel.app/
     healthCheckPath: /health
     autoDeploy: true
