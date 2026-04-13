@@ -393,7 +393,7 @@
       <button class="tab" onclick="switchTab('improve')">Improve + Cover Letter</button>
     </div>
 
-    <!-- ── Panel 1: Analyze CV ───────────────────────────────────────── -->
+    <!--  Panel 1: Analyze CV  -->
     <div id="panel-analyze" class="panel active">
       <div class="card">
         <div class="card-title">Your CV</div>
@@ -411,7 +411,7 @@
       </div>
     </div>
 
-    <!-- ── Panel 2: Match Job ────────────────────────────────────────── -->
+    <!--  Panel 2: Match Job -->
     <div id="panel-match" class="panel">
       <div class="card">
         <div class="card-title">Match Your CV to a Job</div>
@@ -434,7 +434,7 @@
       </div>
     </div>
 
-    <!-- ── Panel 3: Improve ──────────────────────────────────────────── -->
+    <!-- Panel 3: Improve -->
     <div id="panel-improve" class="panel">
       <div class="card">
         <div class="card-title">Improve CV & Generate Cover Letter</div>
@@ -467,7 +467,7 @@
   </div>
 
   <script>
-    // ── Helpers ──────────────────────────────────────────────────────────────
+    // Helpers
 
     const api = () => document.getElementById('apiUrl').value.replace(/\/$/, '');
 
@@ -509,7 +509,7 @@
       return res.json();
     }
 
-    // ── Health ping ──────────────────────────────────────────────────────────
+    // Health ping 
 
     async function pingHealth() {
       const dot = document.getElementById('apiDot');
@@ -523,7 +523,7 @@
 
     pingHealth();
 
-    // ── Analyze CV ───────────────────────────────────────────────────────────
+    // Analyze CV
 
     async function analyzeCV() {
       const cv = document.getElementById('cv-analyze').value.trim();
@@ -564,7 +564,7 @@
       }
     }
 
-    // ── Match Job ────────────────────────────────────────────────────────────
+    // Match Job
 
     async function matchJob() {
       const cv = document.getElementById('cv-match').value.trim();
@@ -609,7 +609,7 @@
       }
     }
 
-    // ── Improve CV ───────────────────────────────────────────────────────────
+    //Improve CV
 
     async function improveCV() {
       const cv = document.getElementById('cv-improve').value.trim();

@@ -1,7 +1,3 @@
-# render.yaml — Render deployment config
-# Commit this file. Render reads it automatically.
-# Set OPENAI_API_KEY in Render Dashboard > Environment > Secret Files
-
 services:
   - type: web
     name: job-application-assistant-api
@@ -17,6 +13,6 @@ services:
       - key: OPENAI_API_KEY
         sync: false   # ← You set this manually in Render dashboard (never in this file)
       - key: ALLOWED_ORIGINS
-        value: https://your-frontend.vercel.app  # Update after deploying frontend
+        value: https://jobassistent.vercel.app  # Update after deploying frontend
     healthCheckPath: /health
     autoDeploy: true   # Deploys automatically on push to main
